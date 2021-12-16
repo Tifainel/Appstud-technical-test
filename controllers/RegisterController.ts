@@ -32,6 +32,7 @@ export default class RegisterController {
       const isUserCreated = await this.createUser({
         username: query.username,
         password: query.password,
+        token: token,
       });
 
       if (!isUserCreated) {

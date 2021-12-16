@@ -40,6 +40,7 @@ export default class LoginController {
         this.isLoginDataValid(
           { username: query.username, password: query.password },
           users.users,
+          token,
         )
       )
         customReply(reply, { username: query.username, token }, 200);
@@ -53,11 +54,18 @@ export default class LoginController {
     }
   }
 
-  isLoginDataValid(user: User, users: Array<User>) {
-    return !!users.find(
-      (element) =>
+  isLoginDataValid(user: User, users: Array<User>, token: string) {
+    return !!users.find((element) => {
+      if (
         element.username === user.username &&
-        element.password === user.password,
-    );
+        element.password === user.password
+      ) {
+        element.token = token;
+        fs.writeFileSync('users.json', `{"users": ${JSON.stringify(users)}}`);
+
+        return true;
+      }
+      return false;
+    });
   }
 }
