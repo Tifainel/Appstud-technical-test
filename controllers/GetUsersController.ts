@@ -1,5 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { customReply } from '../helpers/reply';
+import User from '../interfaces/UserInterface';
 
 const fs = require('fs');
 
@@ -18,8 +19,10 @@ export default class GetUsersController {
         customReply(reply, [], 200);
         return;
       }
+
       const users = JSON.parse(fs.readFileSync('users.json')).users;
-      customReply(reply, users, 200);
+
+      customReply(reply, this.removePassword(users), 200);
     } catch (err) {
       customReply(
         reply,
@@ -27,5 +30,12 @@ export default class GetUsersController {
         500,
       );
     }
+  }
+
+  removePassword(users: Array<User>): Array<User> {
+    for (let i = 0; i < users.length; i++) {
+      users[i] = { username: users[i].username };
+    }
+    return users;
   }
 }

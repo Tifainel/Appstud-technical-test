@@ -19,6 +19,7 @@ export default class RegisterController {
     try {
       const query: any = req.query;
       const token = uuidv4();
+
       if (!query.username || !query.password) {
         customReply(
           reply,
@@ -27,13 +28,17 @@ export default class RegisterController {
         );
         return;
       }
+
       const isUserCreated = await this.createUser({
         username: query.username,
+        password: query.password,
       });
+
       if (!isUserCreated) {
         customReply(reply, { error: 'This username is already taken' }, 403);
         return;
       }
+
       customReply(reply, { username: query.username, token }, 200);
       return;
     } catch (err) {
