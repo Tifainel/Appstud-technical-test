@@ -1,23 +1,20 @@
-import fastify, {FastifyInstance} from 'fastify'
+import fastify, { FastifyInstance } from 'fastify';
+export default class HttpGateway {
+  private readonly instance: FastifyInstance;
 
-export default class HttpGateway  {
+  constructor() {
+    this.instance = fastify({ logger: true });
+  }
 
-    private readonly instance: FastifyInstance
+  get router() {
+    return this.instance;
+  }
 
-    constructor() {
-        this.instance = fastify({logger: true});
-    }
+  get port() {
+    return 3000;
+  }
 
-    get router() {
-        return this.instance
-    }
-
-    get port() {
-        return 3000
-    }
-
-    async start() {
-        await this.instance.listen(this.port, '127.0.0.1')
-    }
-
+  async start() {
+    await this.instance.listen(this.port, '127.0.0.1');
+  }
 }
