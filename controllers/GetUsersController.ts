@@ -1,7 +1,4 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import User from '../interfaces/UserInterface';
-import UsersArray from '../interfaces/UsersArrayInterface';
-import { v4 as uuidv4 } from 'uuid';
 import { customReply } from '../helpers/reply';
 
 const fs = require('fs');
