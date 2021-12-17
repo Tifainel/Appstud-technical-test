@@ -13,7 +13,6 @@
   },
   "author": "Appstud",
   "dependencies": {
-    "axios": "^0.20.0",
     "fastify": "^3.2.1",
     "uuid": "^8.3.2"
   },
